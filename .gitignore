@@ -1,0 +1,10 @@
+# UE4 Project directories to ignore
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# Visual Studio solutions
+*.sln
+*.sdf
+*.suo
