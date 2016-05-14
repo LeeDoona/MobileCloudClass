@@ -13,7 +13,4 @@ class PUSHPUSHBABY_API APushPushBabyGameMode : public AGameMode
 {
 	GENERATED_BODY()
 	
-	
-	
-	
 };
