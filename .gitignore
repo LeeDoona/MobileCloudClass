@@ -7,4 +7,5 @@ Saved/
 # Visual Studio solutions
 *.sln
 *.sdf
+*.opensdf
 *.suo
