@@ -51,9 +51,9 @@
      <Compile Include="Assets\JSON\VectorTemplates.cs" />
      <Compile Include="Assets\Scripts\MainMenu.cs" />
      <Compile Include="Assets\Scripts\RemoveRubble.cs" />
-     <Compile Include="Assets\Scripts\TestGUI.cs" />
      <Compile Include="Assets\Scripts\TheStack.cs" />
      <None Include="Assets\JSON\readme.txt" />
+     <None Include="Assets\Pulgins\Android\AndroidManifest.xml" />
      <None Include="Assets\ArtWorks\VertexColor.shader" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>

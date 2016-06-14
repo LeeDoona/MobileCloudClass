@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\JSON\Editor\JSONChecker.cs" />
      <None Include="Assets\JSON\readme.txt" />
+     <None Include="Assets\Pulgins\Android\AndroidManifest.xml" />
      <None Include="Assets\ArtWorks\VertexColor.shader" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
