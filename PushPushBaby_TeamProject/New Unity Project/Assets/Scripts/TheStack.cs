@@ -64,6 +64,14 @@ public class TheStack : MonoBehaviour {
 
 		if (gameOver)
 			return; 
+
+		if (Application.platform == RuntimePlatform.Android) {
+
+			if (Input.GetKey (KeyCode.Escape)) {
+
+				Application.Quit ();
+			}
+		}
 		
 		if (Input.GetMouseButtonDown (0)) {
 			
