@@ -9,6 +9,7 @@ import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
+import com.unity3d.player.UnityPlayer;
 
 public class LoginActivity extends Activity {
     private SessionCallback callback;
@@ -26,6 +27,9 @@ public class LoginActivity extends Activity {
         callback = new SessionCallback();
         Session.getCurrentSession().addCallback(callback);
         Session.getCurrentSession().checkAndImplicitOpen();
+
+        //call from native
+        UnityPlayer.UnitySendMessage("BridgeAndroid", "SetJavaLog", "KakaoLogin");
     }
 
     @Override
