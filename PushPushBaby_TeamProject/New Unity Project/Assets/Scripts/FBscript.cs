@@ -2,6 +2,7 @@
 using System.Collections;
 using Facebook.Unity;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class FBscript : MonoBehaviour {
 
@@ -18,6 +19,7 @@ public class FBscript : MonoBehaviour {
 			Debug.Log("FB is not logged in");
 			FBlogin ();
 		}
+		SceneManager.LoadScene ("Menu");
 	}
 
 	private void InitCallback ()
