@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System;
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -9,6 +11,9 @@ public class TheStack : MonoBehaviour {
 	public Color32[] gameColors = new Color32[4];
 	public Material stackMat; 
 	public GameObject endPanel;
+
+	public delegate void PostCallBackDelegate(string content);
+	public event PostCallBackDelegate PostCallBack;
 
 	private const float BOUNDS_SIZE = 3.5f;
 	private const float STACK_MOVING_SPEED = 5.0f;
@@ -45,6 +50,34 @@ public class TheStack : MonoBehaviour {
 		}
 
 		stackIndex = transform.childCount - 1;
+	}
+
+	void POST(string url, Dictionary<string, string> post) {
+
+		WWWForm form = new WWWForm ();
+
+		foreach (KeyValuePair<string, string> post_arg in post) {
+
+			form.AddField (post_arg.Key, post_arg.Value);
+		}
+
+		var www = new WWW (url, form);
+
+		StartCoroutine (WaitForRequest(www));
+	}
+
+	IEnumerator WaitForRequest(WWW www) {
+
+		yield return www;
+
+		if (www.error == null) {
+
+			Debug.Log ("WWW OK! : " + www.text);
+			PostCallBack (www.text);
+		} else {
+
+			Debug.Log ("WWW Error : " + www.error);
+		}
 	}
 
 	public void CreateRubble(Vector3 pos, Vector3 scale) {
@@ -247,7 +280,15 @@ public class TheStack : MonoBehaviour {
 			return Color.Lerp (c, d, (t - 0.66f) / 0.66f);
 	}
 
-	private void EndGame() {
+	public void EndGame() {
+
+		Dictionary<string, string> PostDic = new Dictionary <string, string> {
+			{ "score", PlayerPrefs.GetInt ("score").ToString () }
+		};
+
+		PostCallBack += new PostCallBackDelegate(ShowRankOfPlayer);
+
+		POST("http://52.78.41.235/new", PostDic);
 
 		if (PlayerPrefs.GetInt ("score") < scoreCount)
 			PlayerPrefs.SetInt ("score", scoreCount);
@@ -256,6 +297,28 @@ public class TheStack : MonoBehaviour {
 		endPanel.SetActive (true);
 
 		theStack [stackIndex].AddComponent<Rigidbody> ();
+	}
+
+	void ShowRankOfPlayer(string rows) {
+
+		string rank = "";
+		string total = "";
+
+		JSONObject tempJson = new JSONObject(rows);
+		tempJson.GetField("rank", delegate (JSONObject rankObj) {
+			rank = rankObj.n.ToString();
+		}, delegate(string name) {
+			Debug.Log ("no rank data");
+		});
+
+		tempJson.GetField("total", delegate (JSONObject totalObj){
+			total = totalObj.n.ToString();
+		}, delegate(string name) {
+			Debug.Log("no total data");
+		});
+
+		//banner.SetActive(true);
+		//banner.GetComponent<UILabel>().text = "You're #" + rank + " strongest among " + total + " users in the world!";
 	}
 
 	public void OnButtonClick(string sceneName) {
